@@ -165,3 +165,11 @@ pub struct BlockField {
 }
 
 js_serializable!(BlockField);
+
+#[derive(Serialize)]
+pub enum CompileResult {
+    Tree(Project),
+    Fail(String),
+}
+
+js_serializable!(CompileResult);

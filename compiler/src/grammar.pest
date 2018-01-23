@@ -1,12 +1,13 @@
-file = _{ soi ~ expr+ ~ eoi }
-expr =  {
+file = _{ soi ~ list+ ~ eoi }
+expr = _{
     ident |
     float |
     int |
     string |
-
-    "(" ~ expr+ ~ ")"
+    list
 }
+
+list = { "(" ~ expr+ ~ ")" }
 
 ident_char   = _{ ident_symbol | "-" | "+" | "." | "_" | digit }
 ident_symbol = _{ 'A'..'Z' | 'a'..'z' | "?" | "!" | "*" | "/" | "<" | "=" |
@@ -30,8 +31,8 @@ string      = @{ "\"" ~ (string_char | escape)* ~ "\"" }
 sign  =  { "+" | "-" }
 digit = _{ '0'..'9' }
 exp   =  { ^"e" ~ sign? ~ int }
-int   =  { sign? ~ digit ~ (digit | "_")* }
-float =  {
+int   = @{ sign? ~ digit ~ (digit | "_")* }
+float = @{
     sign? ~ int ~ "." ~ int? ~ exp? |
     sign? ~ int ~ exp
 }
