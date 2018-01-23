@@ -1,7 +1,7 @@
 # bosh
-bosh is a Lisp that compiles to [Scratch](https://github.com/LLK/scratch-gui) project files. Vaguely inspired by the awesome [tosh](https://github.com/tjvr/tosh) :heart:
+bosh is a lisp dialect that compiles to [Scratch 3.0](https://github.com/LLK/scratch-gui) project files. Vaguely inspired by the awesome [tosh](https://github.com/tjvr/tosh) :heart:
 
-> Note: bosh was designed for Scratch 3.0 but produces Scratch 2.0 project files. This will likely change in the future, as the 3.0 file format becomes better documented.
+> **Note:** bosh compiles to Scratch 3.0 JSON. It will _not_ work with Scratch 2.0 or below.
 
 ---
 

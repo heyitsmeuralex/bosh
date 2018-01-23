@@ -1,5 +1,6 @@
-// Scratch 3.0 pub struct definitions. Currently unused because they aren't actually
-// documented anywhere and are likely to change a bunch before release.
+// Scratch 3.0 pub struct definitions. The ST haven't actually documented
+// this format anywhere and it's likely to change a bunch before release,
+// but bosh compiles to it anyway.
 
 use std::collections::HashMap;
 use serde::{Serialize, Serializer};
