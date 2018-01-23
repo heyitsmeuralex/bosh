@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "build": "npm run build.rs && npm run build.js",
+    "build.rs": "cd compiler && cargo-web build --target-webasm && cp target/wasm32-unknown-unknown/release/compiler.wasm ../app/compiler.wasm",
+    "build.js": "cd app && browserify -d src/app.js -o dist/app.js",
+    "watch": "concurrently -c dim,yellow -p name -kn rs,js \"npm run watch.rs\" \"npm run watch.js\"",
+    "watch.rs": "nodemon -q -I -x \"npm run build.rs\" -w compiler/src -e rs,pest",
+    "watch.js": "cd app && watchify -v -d src/app.js -o dist/app.js",
+    "test": "npm run test.rs",
+    "test.rs": "cd compiler && cargo-web test"
+  },
+  "devDependencies": {
+    "browserify": "^15.2.0",
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.14.11",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "scratch-audio": "^0.1.0-prerelease.1516198804",
+    "scratch-render": "^0.1.0-prerelease.1516202017",
+    "scratch-storage": "^0.3.0",
+    "scratch-vm": "^0.1.0-prerelease.1516215511-prerelease.1516215524"
+  }
+}

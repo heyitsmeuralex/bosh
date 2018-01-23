@@ -1,0 +1,4 @@
+node_modules
+compiler/target
+app/dist
+app/*.wasm

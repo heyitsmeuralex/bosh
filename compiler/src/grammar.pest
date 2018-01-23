@@ -1,0 +1,40 @@
+file = _{ soi ~ expr+ ~ eoi }
+expr =  {
+    ident |
+    float |
+    int |
+    string |
+
+    "(" ~ expr+ ~ ")"
+}
+
+ident_char   = _{ ident_symbol | "-" | "+" | "." | "_" | digit }
+ident_symbol = _{ 'A'..'Z' | 'a'..'z' | "?" | "!" | "*" | "/" | "<" | "=" |
+                  ">" | ":" | "$" | "$" | "%" | "^" | "&" | "~" | escape }
+ident        =  {
+    (ident_symbol ~ ident_char*) |
+    "-" |
+    "+"
+}
+
+hex            = _{ '0'..'9' | 'a'..'f' | 'A'..'F' }
+predefined_esc =  { "b" | "f" | "n" | "O" | "r" | "t" | "v" | "'" | "\'" | "\\" }
+octal_esc      =  { "d" ~ digit ~ digit ~ digit }
+byte_esc       =  { "x" ~ hex ~ hex }
+unicode_esc    =  { "u" ~ hex ~ hex ~ hex ~ hex }
+escape         =  { "\\" ~ (predefined_esc | octal_esc | byte_esc | unicode_esc) }
+
+string_char = _{ (!("\\" | "\"") ~ any)+ }
+string      = @{ "\"" ~ (string_char | escape)* ~ "\"" }
+
+sign  =  { "+" | "-" }
+digit = _{ '0'..'9' }
+exp   =  { ^"e" ~ sign? ~ int }
+int   =  { sign? ~ digit ~ (digit | "_")* }
+float =  {
+    sign? ~ int ~ "." ~ int? ~ exp? |
+    sign? ~ int ~ exp
+}
+
+comment    = _{ ";" ~ (!"\n" ~ any)+ }
+whitespace = _{ " " | "\t" | "\r" | "\n" }

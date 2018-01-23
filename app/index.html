@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset='utf-8'>
+<title>bosh</title>
+
+<style>
+
+  #scratch-stage {
+    border: 1px solid black;
+  }
+
+  #source {
+    font: 18px monospace;
+    min-width: 95%;
+    min-height: 400px;
+  }
+
+</style>
+
+<body>
+  <canvas id='scratch-stage'></canvas>
+
+  <br>
+
+  <button id='green-flag'>Green flag</button>
+  <button id='btn-load'>Load</button>
+
+  <br>
+
+  <textarea id='source'>; raw sauce, no ketchup
+(when-gf-clicked
+  (say "hello world"))</textarea>
+
+  <script src='dist/app.js'></script>
+</body>
