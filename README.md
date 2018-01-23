@@ -13,3 +13,19 @@ bosh is a lisp dialect that compiles to [Scratch 3.0](https://github.com/LLK/scr
       (next-costume)
       (wait 0.5))))
 ```
+
+### install
+You'll need [rust](https://rustup.rs/) and [node](https://nodejs.org/).
+
+```sh
+> git clone https://github.com/heyitsmeuralex/bosh
+> cd bosh
+
+> cargo install cargo-web
+> npm install
+
+> npm run build
+# visit app/index.html in a web browser
+```
+
+You can automatically build `compiler/` and `app/` on file change with `npm run watch`.
