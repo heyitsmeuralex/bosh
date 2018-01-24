@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "postinstall": "mkdir -p app/dist",
     "build": "npm run build.rs && npm run build.js",
     "build.rs": "cd compiler && cargo-web build --target-webasm && cp target/wasm32-unknown-unknown/release/compiler.wasm ../app/compiler.wasm",
     "build.js": "cd app && browserify -d src/app.js -o dist/app.js",
