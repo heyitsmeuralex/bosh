@@ -9,9 +9,10 @@ expr = _{
 
 list = { "(" ~ expr+ ~ ")" }
 
+ident_escape = _{ "\\" ~ any }
 ident_char   = _{ ident_symbol | "-" | "+" | "." | "_" | digit }
 ident_symbol = _{ 'A'..'Z' | 'a'..'z' | "?" | "!" | "*" | "/" | "<" | "=" |
-                  ">" | ":" | "$" | "$" | "%" | "^" | "&" | "~" | escape }
+                  ">" | ":" | "$" | "$" | "%" | "^" | "&" | "~" | ident_escape }
 ident        =  {
     (ident_symbol ~ ident_char*) |
     "-" |
