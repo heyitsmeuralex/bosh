@@ -40,8 +40,6 @@ fn error_at(rule_pair: Pair<Rule>, msg: &'static str) -> String {
     error_at_pos(rule_pair.clone().into_span().start_pos(), msg)
 }
 
-
-
 fn compile(source: String) -> CompileResult {
     let parse_result = Grammar::parse(Rule::file, &source);
     let mut project = Project {
@@ -70,6 +68,7 @@ fn compile(source: String) -> CompileResult {
                 match declaration_type.unwrap().into_span().as_str() {
                     "sprite" | "stage" => {
                         // TODO
+                        return CompileResult::Fail("Not yet implemented".to_string());
                     },
                     _ => return CompileResult::Fail(error_at(declaration.clone(), "Expected declaration (eg. `sprite` call)"))
                 }

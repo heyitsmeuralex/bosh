@@ -10,7 +10,7 @@ Check out the [playground](http://bosh.imalex.xyz)!
 ```scheme
 ; raw sauce, no ketchup
 (sprite "Big Shaq"
-  (costumesv
+  (costumes
     (from-url "https://a.pomf.space/kjimqhiplqfa.png"))
   (scripts
     (when-gf-clicked
