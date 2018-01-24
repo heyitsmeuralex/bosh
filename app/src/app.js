@@ -1,4 +1,4 @@
-const compiler = require('../../compiler/target/wasm32-unknown-unknown/release/compiler.js')
+const compiler = require('../../compiler/target/wasm32-unknown-unknown/release/bosh_compiler.js')
 
 const VirtualMachine = require('scratch-vm')
 const Renderer = require('scratch-render')

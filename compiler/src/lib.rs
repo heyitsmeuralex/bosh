@@ -1,4 +1,5 @@
-// Entry point `extern create` uses of the compiler.
+//! This package exposes the backend of the compiler for bosh, a lisp dialect that
+//! compiles to Scratch 3.0 JSON.
 
 extern crate pest;
 #[macro_use] extern crate pest_derive;

@@ -1,7 +1,12 @@
 **work in progress**
 
-# bosh
+# bosh [![](https://img.shields.io/crates/v/bosh.svg)](https://crates.io/crates/bosh) [![](https://docs.rs/bosh/badge.svg)](https://docs.rs/bosh)
 bosh is a lisp dialect that compiles to [Scratch 3.0](https://github.com/LLK/scratch-gui) project files. Vaguely inspired by the awesome [tosh](https://github.com/tjvr/tosh) :heart:
+
+```
+> cargo install bosh
+> bosh --help
+```
 
 > **Note:** bosh compiles to Scratch 3.0 JSON. It will _not_ work with Scratch 2.0 or below.
 
@@ -35,6 +40,7 @@ To build the standalone compiler, you'll need [rust](https://rustup.rs).
 ```sh
 > cd cli
 > cargo install
+> bosh --help
 ```
 
 Then use `bosh project.txt > project.json` to compile your projects.

@@ -2,7 +2,7 @@
   "scripts": {
     "postinstall": "mkdir -p app/dist",
     "build": "npm run build.rs && npm run build.js",
-    "build.rs": "cd compiler && cargo-web build --target-webasm && cp target/wasm32-unknown-unknown/release/compiler.wasm ../app/compiler.wasm",
+    "build.rs": "cd compiler && cargo-web build --target-webasm && cp target/wasm32-unknown-unknown/release/bosh_compiler.wasm ../app/bosh_compiler.wasm",
     "build.js": "cd app && browserify -d src/app.js -o dist/app.js",
     "watch": "concurrently -c dim,yellow -p name -kn rs,js \"npm run watch.rs\" \"npm run watch.js\"",
     "watch.rs": "nodemon -q -I -x \"npm run build.rs\" -w compiler/src -e rs,pest",

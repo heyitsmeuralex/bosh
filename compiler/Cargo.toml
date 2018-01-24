@@ -1,12 +1,18 @@
 [package]
-name = "compiler"
+name = "bosh_compiler"
+description = "Compiler backend for bosh, a Lisp that compiles to Scratch 3.0 project files"
+repository = "https://github.com/heyitsmeuralex/bosh.git"
 version = "0.0.0"
+license = "Unlicense"
+exclude = ["src/main.rs"]
+authors = ["alex (https://imalex.xuz)"]
 
 [dependencies]
 pest = "^1.0"
 pest_derive = "^1.0"
 
-stdweb = "^0.3.0"
-
 serde = "^1.0"
 serde_derive = "^1.0"
+
+[target.wasm32-unknown-unknown.dependencies]
+stdweb = "^0.3.0"

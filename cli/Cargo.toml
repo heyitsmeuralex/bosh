@@ -1,13 +1,17 @@
 [package]
-name = "bosh_cli"
+name = "bosh"
+description = "CLI frontend for bosh_compiler"
+repository = "https://github.com/heyitsmeuralex/bosh.git"
 version = "0.0.0"
+license = "Unlicense"
+authors = ["alex (https://imalex.xuz)"]
 
 [[bin]]
 name = "bosh"
 path = "src/main.rs"
 
 [dependencies]
-compiler = { path = "../compiler" }
+bosh_compiler = { path = "../compiler", version = "0.0.0" }
 
 structopt = "0.1.0"
 structopt-derive = "0.1.0"

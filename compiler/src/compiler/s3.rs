@@ -1,6 +1,8 @@
-// Scratch 3.0 pub struct definitions. The ST haven't actually documented
-// this format anywhere and it's likely to change a bunch before release,
-// but bosh compiles to it anyway.
+//! Direct representation of a Scratch 3.0 project using structs. This file format is
+//! currently undocumented within the Scratch project itself so the structs here
+//! may not be exhaustive.
+//!
+//! All structs implement **serde::Serialize**.
 
 use std::collections::HashMap;
 use serde::{Serialize, Serializer};
@@ -8,17 +10,26 @@ use serde::ser::SerializeStruct;
 
 #[derive(Serialize)]
 pub struct Project {
+    /// Vector of the stage and the project's sprites, if any.
     pub targets: Vec<Target>,
+
+    /// Compile-time metadata such as Scratch version and user agent.
     pub meta: ProjectMetadata,
 }
 
 #[derive(Serialize)]
 pub struct ProjectMetadata {
+    /// Latest Scratch version when this project was compiled. Latest is 3.0.0.
     pub semver: String,
+
+    /// scratch-vm version this project was compiled for. Latest is 0.1.0.
     pub vm: String,
+
+    /// User-Agent string.
     pub agent: String,
 }
 
+/// A Target represents a Scratch 3.0 sprite or stage.
 #[derive(Serialize)]
 pub struct Target {
     pub id: String,
@@ -81,7 +92,7 @@ pub struct Sound {
 pub struct Variable {
     pub id: String,
     pub name: String,
-    pub value: f64,
+    pub value: f64, // XXX: do variables sometimes contain Strings?
 }
 
 impl Serialize for Variable {
@@ -95,8 +106,8 @@ impl Serialize for Variable {
     }
 }
 
-// Lists and variables are essentially the same, however their 'type' field is "list"
-// and their 'value' field is type Vec<64> rather than type f64.
+/// Lists and variables are essentially the same, however their 'type' field is "list"
+/// and their 'value' field is type Vec<64> rather than type f64.
 pub struct List {
     pub id: String,
     pub name: String,
@@ -116,38 +127,56 @@ impl Serialize for List {
 
 #[derive(Serialize)]
 pub struct Block {
+    /// Unique ID of this block. Can be anything unique.
     pub id: String,
-    pub opcode: String, // e.g. "event_whengreenflag"
 
-    pub inputs: HashMap<String, BlockInput>, // inputs to this block and the blocks they point to
-    pub fields: HashMap<String, BlockField>, // fields on this block and their values
+    /// Scratch 3.0 block opcode, eg. "event_whengreenflag".
+    pub opcode: String,
 
-    pub topLevel: bool, // if this block starts a stack
-    pub next: Option<String>, // next block in the stack
-    pub parent: Option<String>, // parent block id
+    pub inputs: HashMap<String, BlockInput>,
+    pub fields: HashMap<String, BlockField>,
 
-    pub shadow: bool, // if this represents a shadow/slot (e.g. custom block var)
+    /// If this block starts a stack, ie. it's a hat block
+    pub topLevel: bool,
 
-    pub x: i32, // if top-level
-    pub y: i32, // if top-level
+    /// Next block in the stack, if any
+    pub next: Option<String>,
+
+    /// Parent block ID if nested (such as within an if).
+    pub parent: Option<String>,
+
+    /// If this block represents a shadow/slot (such as a custom block argument)
+    pub shadow: bool,
+
+    pub x: i32,
+    pub y: i32,
 }
 
 #[derive(Serialize)]
 pub struct BlockInput {
-    pub name: String, // same as HashMap key
-    pub block: String, // id
+     // Should be the same as the BlockInput's parent HashMap key.
+    pub name: String,
+
+    /// The ID of the block in this sprite's scripts HashMap. Essentially a pointer.
+    pub block: String,
+
     pub shadow: bool,
 }
 
-// Fields are typically used for 'text' blocks (strings) to store their value.
+/// Fields are typically used for static arguments to blocks, such as text inputs
+/// and number inputs.
 #[derive(Serialize)]
 pub struct BlockField {
-    pub name: String, // same as HashMap key
-    pub value: String, // XXX: is this *always* a string or can it be a num too?
+    pub name: String,
+    pub value: String,
 }
 
+// TODO: move this to main.rs and return a Result from compile()
 #[derive(Serialize)]
 pub enum CompileResult {
+    /// Represents a successful compilation.
     Tree(Project),
+
+    /// Represents a parse/compilation failure, with an error message.
     Fail(String),
 }

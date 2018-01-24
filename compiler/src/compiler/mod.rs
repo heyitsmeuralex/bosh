@@ -26,7 +26,8 @@ fn error_at(rule_pair: Pair<Rule>, msg: &'static str) -> String {
     error_at_pos(rule_pair.clone().into_span().start_pos(), msg)
 }
 
-pub fn compile(source: String) -> CompileResult {
+/// Takes bosh sourcecode and attempts to parse it into a Project.
+pub fn compile(source: String) -> CompileResult { // TODO: use Result and make CompileResult JS-specific
     let parse_result = Grammar::parse(Rule::file, &source);
     let mut project = Project {
         targets: Vec::new(),

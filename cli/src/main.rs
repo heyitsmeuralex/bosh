@@ -1,4 +1,6 @@
-extern crate compiler as bosh;
+//! CLI interface to **bosh_compiler**.
+
+extern crate bosh_compiler as bosh;
 
 extern crate structopt;
 #[macro_use] extern crate structopt_derive;
