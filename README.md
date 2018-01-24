@@ -19,12 +19,29 @@ Check out the [playground](http://bosh.imalex.xyz)!
 
 ---
 
-### install
-You'll need [rust](https://rustup.rs/) nightly and [node](https://nodejs.org/).
+### building
+bosh is comprised of a single backend, implemented in rust, and two frontends:
+* the cli, written in rust
+* the playground, written in javascript
 
 ```sh
 > git clone https://github.com/heyitsmeuralex/bosh
-> cd bosh
+```
+
+### the cli
+To build the standalone compiler, you'll need [rust](https://rustup.rs).
+
+```sh
+cd /path/to/bosh
+```
+
+#### the playground
+You'll need [node](https://nodejs.org/) and [rust](https://rustup.rs) **nightly** (`rustup install stable`) to build the [playground](http://bosh.imalex.xyz) locally. This is useful for testing with the actual [Scratch 3.0 runtime](https://github.com/LLK/scratch-vm).
+
+The compiler is compiled to webassembly in order for the playground javascript to use it.
+
+```sh
+> cd /path/to/bosh
 
 > rustup target add wasm32-unknown-unknown
 > cargo install cargo-web

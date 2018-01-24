@@ -1,4 +1,5 @@
 node_modules
 compiler/target
+cli/target
 app/dist
 app/*.wasm

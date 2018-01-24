@@ -12,16 +12,12 @@ pub struct Project {
     pub meta: ProjectMetadata,
 }
 
-js_serializable!(Project);
-
 #[derive(Serialize)]
 pub struct ProjectMetadata {
     pub semver: String,
     pub vm: String,
     pub agent: String,
 }
-
-js_serializable!(ProjectMetadata);
 
 #[derive(Serialize)]
 pub struct Target {
@@ -51,8 +47,6 @@ pub struct Target {
     pub sounds: Vec<Sound>,
 }
 
-js_serializable!(Target);
-
 #[derive(Serialize)]
 pub struct Costume {
     pub name: String,
@@ -66,8 +60,6 @@ pub struct Costume {
 
     pub skinId: i32,
 }
-
-js_serializable!(Costume);
 
 #[derive(Serialize)]
 pub struct Sound {
@@ -86,8 +78,6 @@ pub struct Sound {
     pub soundID: i32,
 }
 
-js_serializable!(Sound);
-
 pub struct Variable {
     pub id: String,
     pub name: String,
@@ -104,8 +94,6 @@ impl Serialize for Variable {
         state.end()
     }
 }
-
-js_serializable!(Variable);
 
 // Lists and variables are essentially the same, however their 'type' field is "list"
 // and their 'value' field is type Vec<64> rather than type f64.
@@ -126,8 +114,6 @@ impl Serialize for List {
     }
 }
 
-js_serializable!(List);
-
 #[derive(Serialize)]
 pub struct Block {
     pub id: String,
@@ -146,16 +132,12 @@ pub struct Block {
     pub y: i32, // if top-level
 }
 
-js_serializable!(Block);
-
 #[derive(Serialize)]
 pub struct BlockInput {
     pub name: String, // same as HashMap key
     pub block: String, // id
     pub shadow: bool,
 }
-
-js_serializable!(BlockInput);
 
 // Fields are typically used for 'text' blocks (strings) to store their value.
 #[derive(Serialize)]
@@ -164,12 +146,8 @@ pub struct BlockField {
     pub value: String, // XXX: is this *always* a string or can it be a num too?
 }
 
-js_serializable!(BlockField);
-
 #[derive(Serialize)]
 pub enum CompileResult {
     Tree(Project),
     Fail(String),
 }
-
-js_serializable!(CompileResult);
