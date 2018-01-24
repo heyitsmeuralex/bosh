@@ -1,6 +1,7 @@
 **work in progress**
 
-# bosh [![](https://img.shields.io/crates/v/bosh.svg)](https://crates.io/crates/bosh) [![](https://docs.rs/bosh/badge.svg)](https://docs.rs/bosh)
+# bosh [![](https://img.shields.io/crates/v/bosh_compiler.svg)](https://crates.io/crates/bosh_compiler) [![](https://docs.rs/bosh_compiler/badge.svg)](https://docs.rs/bosh_compiler)
+<sup>(docs.rs builds are broken on their end at the moment, please use `cargo doc` locally)</sup><br>
 bosh is a lisp dialect that compiles to [Scratch 3.0](https://github.com/LLK/scratch-gui) project files. Vaguely inspired by the awesome [tosh](https://github.com/tjvr/tosh) :heart:
 
 ```
