@@ -13,12 +13,12 @@ const audioEngine = new AudioEngine()
 const storage = new ScratchStorage()
 
 storage.addWebSource([AssetType.ImageVector, AssetType.ImageBitmap, AssetType.Sound], asset =>
-    'https://cdn.assets.scratch.mit.edu/' +
-      'internalapi/asset/' +
-      asset.assetId +
-      '.' +
-      asset.dataFormat +
-      '/get/'
+  'https://cdn.assets.scratch.mit.edu/' +
+    'internalapi/asset/' +
+    asset.assetId +
+    '.' +
+    asset.dataFormat +
+    '/get/'
 )
 
 vm.attachStorage(storage)
@@ -27,63 +27,59 @@ vm.attachAudioEngine(audioEngine)
 
 // Feed mouse events as VM I/O events.
 document.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    const coordinates = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        canvasWidth: rect.width,
-        canvasHeight: rect.height
-    }
-    vm.postIOData('mouse', coordinates)
+  const rect = canvas.getBoundingClientRect();
+  vm.postIOData('mouse', {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+    canvasWidth: rect.width,
+    canvasHeight: rect.height
+  })
 })
 canvas.addEventListener('mousedown', e => {
-    const rect = canvas.getBoundingClientRect()
-    const data = {
-        isDown: true,
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        canvasWidth: rect.width,
-        canvasHeight: rect.height
-    }
-    vm.postIOData('mouse', data)
-    e.preventDefault()
+  const rect = canvas.getBoundingClientRect()
+  vm.postIOData('mouse', {
+    isDown: true,
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+    canvasWidth: rect.width,
+    canvasHeight: rect.height
+  })
+
+  e.preventDefault()
 })
 canvas.addEventListener('mouseup', e => {
-    const rect = canvas.getBoundingClientRect()
-    const data = {
-        isDown: false,
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        canvasWidth: rect.width,
-        canvasHeight: rect.height
-    }
-    vm.postIOData('mouse', data)
-    e.preventDefault()
+  const rect = canvas.getBoundingClientRect()
+  vm.postIOData('mouse', {
+    isDown: false,
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+    canvasWidth: rect.width,
+    canvasHeight: rect.height
+  })
+
+  e.preventDefault()
 })
 
 // Feed keyboard events as VM I/O events.
 document.addEventListener('keydown', e => {
-    // Don't capture keys intended for Blockly inputs.
-    if (e.target !== document && e.target !== document.body) {
-        return
-    }
-    vm.postIOData('keyboard', {
-        keyCode: e.keyCode,
-        isDown: true
-    })
-    e.preventDefault()
+  vm.postIOData('keyboard', {
+    keyCode: e.keyCode,
+    isDown: true
+  })
+
+  e.preventDefault()
 })
 document.addEventListener('keyup', e => {
-    // Always capture up events,
-    // even those that have switched to other targets.
-    vm.postIOData('keyboard', {
-        keyCode: e.keyCode,
-        isDown: false
-    })
-    // E.g., prevent scroll.
-    if (e.target !== document && e.target !== document.body) {
-        e.preventDefault()
-    }
+  // Always capture up events,
+  // even those that have switched to other targets.
+  vm.postIOData('keyboard', {
+    keyCode: e.keyCode,
+    isDown: false
+  })
+  // E.g., prevent scroll.
+  if (e.target !== document && e.target !== document.body) {
+    e.preventDefault()
+  }
 })
 
 // Go!!
