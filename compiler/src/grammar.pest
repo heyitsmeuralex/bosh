@@ -7,7 +7,7 @@ expr = _{
     list
 }
 
-list = { "(" ~ expr+ ~ ")" }
+list = { "(" ~ expr* ~ ")" }
 
 ident_escape = _{ "\\" ~ any }
 ident_char   = _{ ident_symbol | "-" | "+" | "." | "_" | digit }

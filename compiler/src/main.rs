@@ -21,12 +21,31 @@ js_serializable!(List);
 js_serializable!(Block);
 js_serializable!(BlockInput);
 js_serializable!(BlockField);
+
+/// JS-serializable form of std::result::Result. Should probably not exist.
+#[derive(Serialize)]
+pub enum CompileResult {
+    /// Represents a successful compilation.
+    Tree(Project),
+
+    /// Represents a parse/compilation failure, with an error message.
+    Fail(String),
+}
+
 js_serializable!(CompileResult);
+
+/// Wraps compiler::compile and returns a js
+fn compile_serializable(source: String) -> CompileResult {
+    match compiler::compile(source) {
+        Ok(project)  => CompileResult::Tree(project),
+        Err(message) => CompileResult::Fail(message)
+    }
+}
 
 fn main() {
     stdweb::initialize();
 
     js! {
-        Module.exports.compile = @{compiler::compile};
+        Module.exports.compile = @{compile_serializable};
     }
 }

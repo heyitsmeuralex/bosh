@@ -170,13 +170,3 @@ pub struct BlockField {
     pub name: String,
     pub value: String,
 }
-
-// TODO: move this to main.rs and return a Result from compile()
-#[derive(Serialize)]
-pub enum CompileResult {
-    /// Represents a successful compilation.
-    Tree(Project),
-
-    /// Represents a parse/compilation failure, with an error message.
-    Fail(String),
-}

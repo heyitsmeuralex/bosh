@@ -11,7 +11,6 @@ use std::process;
 use std::fs::File;
 use std::io::prelude::*;
 use structopt::StructOpt;
-use bosh::compiler::s3::CompileResult::{Tree, Fail};
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "bosh", about = "Compiler for bosh, a Lisp that compiles to Scratch 3.0 JSON")]
@@ -39,8 +38,8 @@ fn main() {
 
     // Compile the source
     match bosh::compiler::compile(f_content) {
-        Tree(project) => println!("{}", serde_json::to_string(&project).unwrap()),
-        Fail(error_msg) => {
+        Ok(project) => println!("{}", serde_json::to_string(&project).unwrap()),
+        Err(error_msg) => {
             println!("{}", error_msg);
             process::exit(1);
         }

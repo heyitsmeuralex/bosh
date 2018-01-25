@@ -1,9 +1,9 @@
 #![allow(non_snake_case)]
 
 pub mod s3;
-use self::s3::{CompileResult, Project, Target, Costume, ProjectMetadata};
+use self::s3::{Project, Target, Costume, ProjectMetadata};
 use pest::{Position, Parser};
-use pest::iterators::Pair;
+use pest::iterators::{Pairs, Pair};
 use std::collections::HashMap;
 
 #[cfg(debug_assertions)]
@@ -27,7 +27,7 @@ fn error_at(rule_pair: Pair<Rule>, msg: &'static str) -> String {
 }
 
 /// Takes bosh sourcecode and attempts to parse it into a Project.
-pub fn compile(source: String) -> CompileResult { // TODO: use Result and make CompileResult JS-specific
+pub fn compile(source: String) -> Result<Project, String> {
     let parse_result = Grammar::parse(Rule::file, &source);
     let mut project = Project {
         targets: Vec::new(),
@@ -39,25 +39,25 @@ pub fn compile(source: String) -> CompileResult { // TODO: use Result and make C
     };
 
     match parse_result.clone().err() {
-        Some(err) => return CompileResult::Fail(format!("{}", err)),
+        Some(err) => return Err(format!("{}", err)),
 
         None => {
             // Parse success
             for declaration in parse_result.unwrap() {
                 let mut pairs = declaration.clone().into_inner();
-                let declaration_type = pairs.nth(0); // consumes pairs.0
+                let declaration_type = pairs.nth(0); // Consumes!
 
                 if declaration_type.is_none() {
                     // No declaration type given (first arg) ie. ()
-                    return CompileResult::Fail(error_at(declaration.clone(), "Illegal empty list, expected declaration"));
+                    return Err(error_at(declaration.clone(), "Illegal empty list, expected declaration"));
                 }
 
                 match declaration_type.unwrap().into_span().as_str() {
                     "sprite" | "stage" => {
                         // TODO
-                        return CompileResult::Fail("Not yet implemented".to_string());
+                        return Err("Not yet implemented".to_string());
                     },
-                    _ => return CompileResult::Fail(error_at(declaration.clone(), "Expected declaration (eg. `sprite` call)"))
+                    _ => return Err(error_at(declaration.clone(), "Expected declaration (eg. `sprite` call)"))
                 }
 
                 /*
@@ -133,7 +133,7 @@ pub fn compile(source: String) -> CompileResult { // TODO: use Result and make C
     })
     */
 
-    CompileResult::Tree(project)
+    Ok(project)
 }
 
 // TODO: tests
